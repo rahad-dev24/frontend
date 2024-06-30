@@ -5,6 +5,7 @@ export const CREATE_PRODUCT = gql`
     $description: String
     $price: Float
     $rentPrice: Float
+    $rentOption: String
     $productCategory: [String]
   ) {
     createProduct(
@@ -12,6 +13,7 @@ export const CREATE_PRODUCT = gql`
       description: $description
       price: $price
       rent_price: $rentPrice
+      rent_option: $rentOption
       product_category: $productCategory
     ) {
       id

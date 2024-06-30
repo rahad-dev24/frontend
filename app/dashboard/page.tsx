@@ -1,5 +1,4 @@
 import React from "react";
-import { cookies } from "next/headers";
 import Products from "./_lib/Products";
 
 const page = () => {
