@@ -1,12 +1,15 @@
-import React from "react";
-import Products from "./_lib/Products";
-
+import Wrapper from "@/components/dashboard/Wrapper";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 const page = () => {
-  return (
-    <div>
-      <Products />
-    </div>
-  );
+  const cookieStore = cookies();
+  const loggedIn = cookieStore.get("sid")?.value;
+
+  if (!loggedIn) {
+    redirect("/login");
+  }
+
+  return <Wrapper />;
 };
 
 export default page;

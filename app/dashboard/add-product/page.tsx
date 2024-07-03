@@ -1,9 +1,11 @@
-import React from "react";
-import ProductForm from "./_lib/ProductForm";
+import ProductForm from "@/components/add-product/ProductForm";
 
 const page = () => {
   return (
-    <div className="w-2/3 min-h-screen m-auto flex justify-center items-center">
+    <div
+      className="w-full m-auto flex justify-center items-center mt-28
+      "
+    >
       <ProductForm />
     </div>
   );
