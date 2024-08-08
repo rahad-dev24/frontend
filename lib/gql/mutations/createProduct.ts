@@ -17,6 +17,15 @@ export const CREATE_PRODUCT = gql`
       categories: $categories
     ) {
       id
+      description
+      createdAt
+      price
+      product_name
+      rent_option
+      rent_price
+      categories {
+        id
+      }
     }
   }
 `;

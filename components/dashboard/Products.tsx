@@ -10,6 +10,7 @@ const Products = () => {
     variables: {
       userId: "",
     },
+    fetchPolicy: "cache-first",
   });
 
   const { data: categories } = useQuery(GET_CATEGORIES);

@@ -5,7 +5,9 @@ import { useQuery } from "@apollo/client";
 import ProductList from "./ProductList";
 
 const AllProducts = () => {
-  const { data, loading, error } = useQuery(GET_ALL_PRODUCTS);
+  const { data, loading, error } = useQuery(GET_ALL_PRODUCTS, {
+    fetchPolicy: "cache-and-network",
+  });
   if (data?.getProducts.length > 0)
     return (
       <div className="mt-16 w-2/3">

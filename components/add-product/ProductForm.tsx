@@ -43,6 +43,7 @@ import {
 } from "@/components/extension/multi-select";
 import { Textarea } from "@/components/ui/textarea";
 import { redirect } from "next/navigation";
+import { GET_ALL_PRODUCTS } from "@/lib/gql/queries/getAllProducts";
 
 const ProductForm = () => {
   //form progress state
@@ -70,10 +71,34 @@ const ProductForm = () => {
     {
       refetchQueries: [
         {
-          query: GET_PRODUCTS_BY_USER,
-          variables: { userId: "" },
+          query: GET_ALL_PRODUCTS,
         },
       ],
+      update(cache, { data: { createProduct } }) {
+        const existingProducts = cache.readQuery({
+          query: GET_PRODUCTS_BY_USER,
+          variables: { userId: "" },
+        });
+
+        existingProducts
+          ? cache.writeQuery({
+              query: GET_PRODUCTS_BY_USER,
+              variables: { userId: "" },
+              data: {
+                getProducts_by_user: [
+                  createProduct,
+                  ...existingProducts?.getProducts_by_user,
+                ],
+              },
+            })
+          : cache.writeQuery({
+              query: GET_PRODUCTS_BY_USER,
+              variables: { userId: "" },
+              data: {
+                getProducts_by_user: [createProduct],
+              },
+            });
+      },
     },
   );
 
@@ -82,7 +107,7 @@ const ProductForm = () => {
 
   const onSubmit = (data: z.infer<typeof productSchema>) => {
     // Handle form submission here
-    console.log(data.categories);
+
     let product_categories: string[] = [];
     data?.categories.map((category) => {
       categories?.getCategories.map(
@@ -93,7 +118,6 @@ const ProductForm = () => {
         },
       );
     });
-    console.log(product_categories);
     createProduct({
       variables: {
         productName: data.product_name,
